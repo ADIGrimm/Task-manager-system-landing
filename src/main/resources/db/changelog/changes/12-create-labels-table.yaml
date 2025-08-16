@@ -1,0 +1,45 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-labels-table
+      author: SD
+      changes:
+        - createTable:
+            tableName: labels
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: color
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  name: task_id
+                  type: BIGINT
+              - addForeignKeyConstraint:
+                  constraintName: fk_label_user
+                  baseTableName: labels
+                  baseColumnNames: user_id
+                  referencedTableName: users
+                  referencedColumnNames: id
+                  onDelete: CASCADE
+              - addForeignKeyConstraint:
+                  constraintName: fk_label_task
+                  baseTableName: labels
+                  baseColumnNames: task_id
+                  referencedTableName: tasks
+                  referencedColumnNames: id
+                  onDelete: CASCADE
